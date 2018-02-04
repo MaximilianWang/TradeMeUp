@@ -8,6 +8,12 @@ import { loginRouter } from "./routes/login";
 import { protectedRouter } from "./routes/protected";
 import { publicRouter } from "./routes/public";
 import { userRouter } from "./routes/user";
+import { ExchangeService } from "./routes/services/exchangeapi";
+
+var isProduction = process.env.NODE_ENV === 'production';
+
+const exchangeService = new ExchangeService();
+console.log(exchangeService.hi());
 
 const app: express.Application = express();
 
@@ -35,6 +41,21 @@ app.use((req: express.Request, res: express.Response, next) => {
   const err = new Error("Not Found");
   next(err);
 });
+
+
+// will print stacktrace
+if (!isProduction) {
+  app.use(function(err, req, res, next) {
+    console.log(err.stack);
+
+    res.status(err.status || 500);
+
+    res.json({'errors': {
+      message: err.message,
+      error: err
+    }});
+  });
+}
 
 // production error handler
 // no stacktrace leaked to user

@@ -11,11 +11,12 @@ import { AppComponent } from './app.component';
 import { routes } from './app.router';
 import { metaReducers, reducers } from './store';
 import { SharedModule } from './shared/shared.module';
-import { WeatherService } from './weather/weather.service';
-import { WeatherEffects } from './store/weather/weather.effects';
-import { FeedEffects } from './store/feed/feed.effects';
+import { BinanceAPIService } from './binance/binanceapi.service';
+import { TradePairEffects } from './store/tradepair/tradepair.effects';
 import { ProfileEffects } from './store/profile/profile.effects';
 import { environment } from '../environments/environment';
+import { DashboardModule } from './dashboard/dashboard.module';
+import { BinanceModule } from './binance/binance.module';
 
 @NgModule({
   declarations: [
@@ -25,12 +26,13 @@ import { environment } from '../environments/environment';
     BrowserModule,
     SharedModule,
     FormsModule,
+    DashboardModule,
+    BinanceModule,
     HttpClientModule,
     StoreModule.forRoot(reducers, { metaReducers }),
     EffectsModule.forRoot([
       ProfileEffects,
-      FeedEffects,
-      WeatherEffects
+      TradePairEffects
     ]),
     !environment.production ? StoreDevtoolsModule.instrument({ maxAge: 50 }) : [],
     RouterModule.forRoot(
@@ -41,7 +43,7 @@ import { environment } from '../environments/environment';
     )
   ],
   providers: [
-    WeatherService
+    BinanceAPIService
   ],
   bootstrap: [
     AppComponent

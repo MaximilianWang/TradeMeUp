@@ -8,26 +8,24 @@ import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/concat';
 
 import {
-  WEATHER_GET, AIR_QUALITY_GET, WEATHER_DATA_GET, WeatherGet,
-  WeatherAirQuality, WeatherDataGet, WeatherAirQualitySuccess, WeatherAirQualityFail, WeatherGetSuccess, WeatherGetFail,
-  WeatherDataGetSuccess, WeatherDataGetFail
-} from './weather.actions';
-import { WeatherService } from '../../weather/weather.service';
+ SELECT_TRADE_PAIR, TRADE_PAIR_GET, TRADE_PAIR_GET_FAIL, TRADE_PAIR_GET_SUCCESS, TradePairGet, TradePairGetFail, TradePairGetSuccess, TradePairSelect} from './tradepair.actions';
+import { TradePairAPIService } from '../../tradepair/tradepairapi.service';
 
 @Injectable()
-export class WeatherEffects {
+export class TradePairEffects {
 
   @Effect()
   init$ = this.actions$
-    .ofType(WEATHER_GET)
-    .mergeMap((action: WeatherGet) => {
+    .ofType(TRADE_PAIR_GET)
+    .mergeMap((action: TradePairGet) => {
 
+      
       return Observable.concat(
-        Observable.of(new WeatherAirQuality(action.payload)),
-        Observable.of(new WeatherDataGet(action.payload))
+        //Observable.of(new WeatherAirQuality(action.payload)),
+        //Observable.of(new WeatherDataGet(action.payload))
       );
     });
-
+/*
   @Effect()
   airQualityGet$ = this.actions$
     .ofType(AIR_QUALITY_GET)
@@ -57,6 +55,6 @@ export class WeatherEffects {
         .map((response: any) => new WeatherDataGetSuccess(response))
         .catch((error) => Observable.of(new WeatherDataGetFail(error)));
     });
-
-  constructor(private actions$: Actions, private weatherService: WeatherService) {}
+*/
+  constructor(private actions$: Actions, private binanceAPI: TradePairEffects) {}
 }
