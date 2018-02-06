@@ -9,5 +9,5 @@
     "server/**/*.ts"
   ],
   "ext": "ts",
-  "exec": "ts-node ./server/bin/.hack.ts"
+  "exec": "ts-node ./server/bin/hack.ts"
 }

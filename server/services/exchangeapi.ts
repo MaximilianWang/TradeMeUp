@@ -1,6 +1,6 @@
 import { TradePair } from "../models/tradepair";
 
-export interface ExchangeService {
+export interface ExchangeAPIService {
 
     getAllTradePairs(): Array<TradePair>;
 

@@ -11,12 +11,12 @@ import { AppComponent } from './app.component';
 import { routes } from './app.router';
 import { metaReducers, reducers } from './store';
 import { SharedModule } from './shared/shared.module';
-import { BinanceAPIService } from './binance/binanceapi.service';
 import { TradePairEffects } from './store/tradepair/tradepair.effects';
 import { ProfileEffects } from './store/profile/profile.effects';
 import { environment } from '../environments/environment';
 import { DashboardModule } from './dashboard/dashboard.module';
-import { BinanceModule } from './binance/binance.module';
+import { TradePairModule } from './tradepair/tradepair.module';
+import { TradePairsService } from '../../server/services/tradepairsservice';
 
 @NgModule({
   declarations: [
@@ -27,7 +27,7 @@ import { BinanceModule } from './binance/binance.module';
     SharedModule,
     FormsModule,
     DashboardModule,
-    BinanceModule,
+    TradePairModule,
     HttpClientModule,
     StoreModule.forRoot(reducers, { metaReducers }),
     EffectsModule.forRoot([
@@ -43,7 +43,7 @@ import { BinanceModule } from './binance/binance.module';
     )
   ],
   providers: [
-    BinanceAPIService
+    TradePairsService
   ],
   bootstrap: [
     AppComponent

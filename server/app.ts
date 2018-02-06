@@ -8,13 +8,11 @@ import { loginRouter } from "./routes/login";
 import { protectedRouter } from "./routes/protected";
 import { publicRouter } from "./routes/public";
 import { userRouter } from "./routes/user";
-import { ExchangeService } from "./services/exchangeapi";
-import { BinanceExchangeAPIService } from "./services/binanceservice";
+
+import { ExchangeAPIService } from "./services/exchangeapi";
+import { tradepairRouter } from "./routes/tradepairs";
 
 var isProduction = process.env.NODE_ENV === 'production';
-
-const exchangeService: ExchangeService = new BinanceExchangeAPIService();
-console.log(exchangeService.hi());
 
 const app: express.Application = express();
 
@@ -30,6 +28,7 @@ app.use("/api/login", loginRouter);
 app.use("/api/public", publicRouter);
 app.use("/api/feed", feedRouter);
 app.use("/api/user", userRouter);
+app.use("/api/tradepairs", tradepairRouter);
 
 if (app.get("env") === "production") {
 
