@@ -9,17 +9,27 @@ export class BinanceExchangeAPIService implements ExchangeAPIService {
     getAllTradePairs(): TradePair[] {
         throw new Error("Method not implemented.");
     }
-    hi(): string {
+    async hi(): Promise<string> {
         //return "hyo the environment is " + process.env.NODE_ENV;
-        var strinvy ="";
-        var request = require('request');
-        request.get(BinanceExchangeAPIService.BASE_API_URL + "/api/v1/ping",  function (e, r, body) {
-            strinvy = body;
+        var strinvy = "";
+        var rp = require('request-promise');
 
-        });
+        /*
+        return rp(BinanceExchangeAPIService.BASE_API_URL + "/api/v1/time")
+            .then(function (htmlString) {
+                return htmlString;
+            })
+            .catch(function (err) {
+                // Crawling failed...
+                return "why";
+            });
 
-        return strinvy;
+            */
+
+
+            return rp(BinanceExchangeAPIService.BASE_API_URL + "/api/v1/time");
+        //return strinvy;
     }
 
-    
+
 }

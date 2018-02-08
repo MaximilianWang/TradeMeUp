@@ -4,7 +4,7 @@ export interface ExchangeAPIService {
 
     getAllTradePairs(): Array<TradePair>;
 
-    hi(): string; //dummy test
+    hi(): Promise<string>; //dummy test
 
 
 }
