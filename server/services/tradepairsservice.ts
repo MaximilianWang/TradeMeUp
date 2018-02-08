@@ -10,7 +10,7 @@ export class TradePairsService {
         var service : ExchangeAPIService = ExchangeAPIFactory.generateService(exchange);
         let res;
         try {
-            res = await service.hi();
+            res = await service.getAllTradePairs();
 
         } catch (err) {
             

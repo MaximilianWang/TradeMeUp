@@ -45,15 +45,14 @@ app.use((req: express.Request, res: express.Response, next) => {
 
 // will print stacktrace
 if (!isProduction) {
-  app.use(function(err, req, res, next) {
-    console.log(err.stack);
+
+  app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
 
     res.status(err.status || 500);
-
-    res.json({'errors': {
+    res.json({
+      error: err,
       message: err.message,
-      error: err
-    }});
+    });
   });
 }
 
