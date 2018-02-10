@@ -15,9 +15,9 @@ export class BinanceExchangeAPIService implements ExchangeAPIService {
         let parsedBody: ExchangeInfoBody = new ExchangeInfoBody();
 
         try {
-            response = await rp(BinanceExchangeAPIService.BASE_API_URL + "/api/v1/exchangeInfo").then(JSON.parse);
+            response = await rp(BinanceExchangeAPIService.BASE_API_URL + "/api/v1/time").then(JSON.parse);
             if(response.hasOwnProperty('symbols')){
-                //console.log(response.symbols);
+                console.log(typeof response);
                 parsedBody.deserialize(response);
 
             }

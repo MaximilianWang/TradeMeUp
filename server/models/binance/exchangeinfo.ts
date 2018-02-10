@@ -9,14 +9,23 @@ export class ExchangeInfo implements Serializable<ExchangeInfo>{
     protected quoteAsset: string = null;
 
     constructor() {
-        
+
 
     }
 
     deserialize(input: any): ExchangeInfo {
-        this.symbol = input.symbol;
-        this.baseAsset = input.baseAsset;
-        this.quoteAsset = input.quoteAsset;
+        if (input.hasOwnProperty("symbol")) {
+            this.symbol = input.symbol;
+        }
+
+        if (input.hasOwnProperty("baseAsset")) {
+            this.baseAsset = input.baseAsset;
+        }
+
+        if (input.hasOwnProperty("quoteAsset")) {
+            this.quoteAsset = input.quoteAsset;
+        }
+
         return this;
     }
 
@@ -26,7 +35,7 @@ export class ExchangeInfo implements Serializable<ExchangeInfo>{
         if (!this.symbol || !this.baseAsset || !this.quoteAsset) {
             return false;
         }
-        
+
         return true;
     }
 

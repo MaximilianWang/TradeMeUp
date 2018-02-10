@@ -5,7 +5,7 @@ const tradepairRouter: Router = Router();
 
 tradepairRouter.get("/hi", async (request: Request, response: Response) => {
 
-  const res = await TradePairsService.handleGetTradePairs("binance");
+  const res = await TradePairsService.syncTradePairs("binance");
   return response.json( {
       res
   });

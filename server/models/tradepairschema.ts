@@ -1,8 +1,13 @@
 import { Document, Schema, Model, model } from "mongoose";
 import { TradePair } from "./tradepair";
 
+export interface TradePairModel extends TradePair, Document {
+    hi(): string;
+  }
+
 export var TradePairSchema: Schema = new Schema({
-    lastUpdated: Date,
+    //_id: Schema.Types.ObjectId,
+    //lastUpdated: Date,
     exchange: String,
     label: String,
     rate: Number
@@ -12,14 +17,11 @@ TradePairSchema.pre("save", function (next) {
     if (this.isModified("rate")) {
         //change last updated value
     }
-
+    next();
 });
 
-TradePairSchema.methods.getTradePairLabel = function (): string {
-    return (this.label.trim());
+TradePairSchema.methods.hi = function (): string {
+    return "gello";
 };
 
-TradePairSchema.methods.getTradePairLabel = function (): number {
-    return (this.rate.trim());
-};
-export const BaseTradePair: Model<TradePair> = model<TradePair>("BaseTradePair", TradePairSchema);
+export const BaseTradePair: Model<TradePairModel> = model<TradePairModel>("tradepairs", TradePairSchema);

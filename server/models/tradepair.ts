@@ -1,8 +1,9 @@
 import { Document } from "mongoose";
 
-export interface TradePair extends Document {
-    getTradePairLabel() : string;
-    getTradePairLastSeenRate() : number;
+export interface TradePair{
+    exchange?: String,
+    label?: String,
+    rate?: Number
     
 }
 

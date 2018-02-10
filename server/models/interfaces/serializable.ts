@@ -3,5 +3,7 @@
  */
 
 export interface Serializable<T> {
-    deserialize(input: any): T;
+    deserialize(input: any): T; //any time because object/Object will cause compile to complain about accessing properties that don't exist
+
+    isValid(): boolean;
 }
