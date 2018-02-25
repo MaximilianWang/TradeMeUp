@@ -1,12 +1,16 @@
 import { Serializable } from "../interfaces/serializable";
+import { TradePair } from "../tradepair";
+import { TradePairRepositoryService } from "../../services/tradepairrepositoryservice";
 
 
 
-export class ExchangeInfo implements Serializable<ExchangeInfo>{
+export class ExchangeInfo implements TradePair, Serializable<ExchangeInfo>{
 
-    protected symbol: string = null;
-    protected baseAsset: string = null;
-    protected quoteAsset: string = null;
+    exchange: string = null;
+    label: string = null;
+    rate: number = null;
+    targetAsset: string = null;
+    baseAsset: string = null;
 
     constructor() {
 
@@ -14,8 +18,9 @@ export class ExchangeInfo implements Serializable<ExchangeInfo>{
     }
 
     deserialize(input: any): ExchangeInfo {
+        this.exchange = TradePairRepositoryService.BINANCE_EXCHANGE_LABEL;
         if (input.hasOwnProperty("symbol")) {
-            this.symbol = input.symbol;
+            this.label = input.symbol;
         }
 
         if (input.hasOwnProperty("baseAsset")) {
@@ -23,7 +28,7 @@ export class ExchangeInfo implements Serializable<ExchangeInfo>{
         }
 
         if (input.hasOwnProperty("quoteAsset")) {
-            this.quoteAsset = input.quoteAsset;
+            this.targetAsset = input.quoteAsset;
         }
 
         return this;
@@ -32,7 +37,7 @@ export class ExchangeInfo implements Serializable<ExchangeInfo>{
 
 
     public isValid(): boolean {
-        if (!this.symbol || !this.baseAsset || !this.quoteAsset) {
+        if (!this.label || !this.baseAsset || !this.targetAsset) {
             return false;
         }
 

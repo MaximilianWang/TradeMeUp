@@ -1,9 +1,11 @@
 import { Document } from "mongoose";
 
-export interface TradePair{
+export interface TradePair {
     exchange?: String,
     label?: String,
-    rate?: Number
+    rate?: Number,
+    targetAsset?: String,
+    baseAsset?: String
     
 }
 

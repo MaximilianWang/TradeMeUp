@@ -3,6 +3,10 @@ import { TradePairsService } from "../services/tradepairsservice";
 
 const tradepairRouter: Router = Router();
 
+
+/**
+ * Test route
+ */
 tradepairRouter.get("/hi", async (request: Request, response: Response) => {
 
   const res = await TradePairsService.syncTradePairs("binance");

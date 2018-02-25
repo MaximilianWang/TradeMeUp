@@ -4,18 +4,24 @@ import { BaseTradePair } from "../models/tradepairschema";
 import { ExchangeInfoBody } from "../models/binance/exchangeinfobody";
 
 
+/**
+ * Service to 
+ * 
+ */
 export class BinanceExchangeAPIService implements ExchangeAPIService {
 
     private static BASE_API_URL: string = "https://api.binance.com";
+    private static EXCHANGE_INFO_EP: string = BinanceExchangeAPIService.BASE_API_URL + "/api/v1/exchangeInfo";
+    private static TIME_EP: string = BinanceExchangeAPIService.BASE_API_URL + "/api/v1/time";
+    
 
     async getAllTradePairs(): Promise<TradePair[]> {
         var rp = require('request-promise');
-        let tradePairs : Array<TradePair> = new Array<TradePair>();
         let response;
         let parsedBody: ExchangeInfoBody = new ExchangeInfoBody();
 
         try {
-            response = await rp(BinanceExchangeAPIService.BASE_API_URL + "/api/v1/time").then(JSON.parse);
+            response = await rp(BinanceExchangeAPIService.EXCHANGE_INFO_EP).then(JSON.parse);
             if(response.hasOwnProperty('symbols')){
                 console.log(typeof response);
                 parsedBody.deserialize(response);
@@ -27,13 +33,16 @@ export class BinanceExchangeAPIService implements ExchangeAPIService {
             console.log(err);
         }
 
-        let t1 : TradePair = new BaseTradePair({
-            exchange: "what"
-        });
+
+        
+        //parsing response
+        //for
+
         
 
-        tradePairs.push(t1);
-        return tradePairs;
+
+        //tradePairs.push(t1);
+        return parsedBody.getSymbols();
 
     }
     async hi(): Promise<string> {

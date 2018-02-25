@@ -30,26 +30,31 @@ export class TradePairsService {
 
     public static async syncTradePairs(exchange: string): Promise<boolean> {
         let success = true;
-        let remoteTradePairs;
+        let remoteTradePairs: Array<TradePair>;
         try {
-            //remoteTradePairs = await TradePairsService.handleGetRemoteTradePairs(exchange);
+            remoteTradePairs = await TradePairsService.handleGetRemoteTradePairs(exchange);
 
         } catch (err) {
             console.log(err);
         }
-
+        
+        //console.log(remoteTradePairs);
+        /*
         let t1 : TradePair = {
             exchange: "what",
             label: "dawf",
             rate: 0.001,
         };
+        */
 
         let repo: TradePairRepositoryService = new TradePairRepositoryService();
-        let b;
         try {
-            console.log("a");
-            b = await repo.writeTradePair(t1);
-            console.log("b");
+            
+            for(var i = 0; i < remoteTradePairs.length; i++ ) {
+                await repo.writeTradePair(remoteTradePairs[i]);
+
+            }
+            //await repo.writeTradePair(t1);
         } catch (err) {
             success = false;
         }

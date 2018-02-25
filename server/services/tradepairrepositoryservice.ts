@@ -8,6 +8,8 @@ import { Document, Schema, Model, model, Connection } from "mongoose";
 
 export class TradePairRepositoryService extends BaseCrudRepositoryService<TradePairModel> {
 
+    public static BINANCE_EXCHANGE_LABEL = "binance";
+
     constructor() {
         super(BaseTradePair);
       }
@@ -20,7 +22,6 @@ export class TradePairRepositoryService extends BaseCrudRepositoryService<TradeP
 
 // Do some stuff
 //var testModel: Model<TradePairModel> = model<TradePairModel>("tradepairs", TradePairSchema);
-        console.log(tradePair);
         let res = true;
         let createRes;
         var db: Connection;
@@ -29,7 +30,6 @@ export class TradePairRepositoryService extends BaseCrudRepositoryService<TradeP
                 exchange : "asdfawf"
 
             });
-            console.log(1 + " " + tradepairsMongoURI);
             db = await mongoose.createConnection(tradepairsMongoURI);
             await db.createCollection("tradepairs");
             var newmodel = db.model<TradePairModel>("tradepairs", TradePairSchema);
@@ -38,13 +38,16 @@ export class TradePairRepositoryService extends BaseCrudRepositoryService<TradeP
             //var mm = new newmodel(tradePair);
 
             
-            console.log(2);
-            
             //await book.save();
-            await newmodel.create(tradePair);
+            
+            let query = await newmodel.findOne(tradePair).count();
+            if (query === 0) {
+                await newmodel.create(tradePair);
+            }
+            
 
-            tradePair.exchange = "111";
-
+            ///tradePair.exchange = "111";
+/*
             await new newmodel(tradePair).save(
                 function(err, wh) {
                     console.log("bad");
@@ -52,7 +55,7 @@ export class TradePairRepositoryService extends BaseCrudRepositoryService<TradeP
                 }
             
         );
-
+*/
 
           /*      
                 , function(err, wh) {
@@ -71,15 +74,11 @@ export class TradePairRepositoryService extends BaseCrudRepositoryService<TradeP
             
         );
             */
-            console.log(3);
             
         } catch (err) {
-            console.log(4);
             res = false;
         } finally {
-            console.log(5);
             if (db) {
-                console.log(6);
                 db.close();    
             }
         }

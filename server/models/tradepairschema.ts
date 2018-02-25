@@ -10,7 +10,9 @@ export var TradePairSchema: Schema = new Schema({
     //lastUpdated: Date,
     exchange: String,
     label: String,
-    rate: Number
+    rate: Number,
+    targetAsset: String,
+    baseAsset: String
 });
 
 TradePairSchema.pre("save", function (next) {
