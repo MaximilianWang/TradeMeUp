@@ -2,78 +2,36 @@
 
 import { TradePair } from '../models/tradepair';
 import { BaseTradePair, TradePairSchema, TradePairModel } from '../models/tradepairschema';
-import { BaseCrudRepositoryService } from './crudrepositoryservice';
 import { tradepairsMongoURI } from '../config';
 import { Document, Schema, Model, model, Connection } from "mongoose";
+import { BaseRepositoryService } from './baserepositoryservice';
 
-export class TradePairRepositoryService extends BaseCrudRepositoryService<TradePairModel> {
+export class TradePairRepositoryService extends BaseRepositoryService<TradePairModel> {
+
 
     public static BINANCE_EXCHANGE_LABEL = "binance";
 
     constructor() {
         super(BaseTradePair);
+
       }
 
     public async writeTradePair(tradePair: TradePair): Promise<boolean> {
 
-        var mongoose = require("mongoose");
-        //await mongoose.connect(tradepairsMongoURI);
-        mongoose.Promise = require("bluebird");
-
-// Do some stuff
-//var testModel: Model<TradePairModel> = model<TradePairModel>("tradepairs", TradePairSchema);
         let res = true;
         let createRes;
         var db: Connection;
         try {
-            var book = new BaseTradePair({
-                exchange : "asdfawf"
-
-            });
-            db = await mongoose.createConnection(tradepairsMongoURI);
-            await db.createCollection("tradepairs");
-            var newmodel = db.model<TradePairModel>("tradepairs", TradePairSchema);
-
-
-            //var mm = new newmodel(tradePair);
-
             
-            //await book.save();
+            db = await this.createMongoConnection(tradepairsMongoURI);
+            var model = db.model<TradePairModel>("tradepairs", TradePairSchema);
+            //await db.createCollection("tradepairs");
             
-            let query = await newmodel.findOne(tradePair).count();
+            
+            let query = await model.findOne(tradePair).count();
             if (query === 0) {
-                await newmodel.create(tradePair);
+                await model.create(tradePair);
             }
-            
-
-            ///tradePair.exchange = "111";
-/*
-            await new newmodel(tradePair).save(
-                function(err, wh) {
-                    console.log("bad");
-    
-                }
-            
-        );
-*/
-
-          /*      
-                , function(err, wh) {
-                console.log("bad");
-
-            }
-        */
-        
-          /*
-            
-            createRes = await new testModel(tradePair).save(
-                function(err, wh) {
-                    console.log("bad");
-    
-                }
-            
-        );
-            */
             
         } catch (err) {
             res = false;
@@ -86,5 +44,34 @@ export class TradePairRepositoryService extends BaseCrudRepositoryService<TradeP
         return res;
         
     }
+
+    public async getAllTradePairsByExchange(exchange: string): Promise<TradePair[]> {
+
+        let res: Array<TradePair>;
+        /*
+        var db: Connection;
+        try {
+            db = await mongoose.createConnection(tradepairsMongoURI);
+            await db.createCollection("tradepairs");
+            
+            let query = await this.model.findOne(tradePair).count();
+            if (query === 0) {
+                await this.model.create(tradePair);
+            }
+            
+        } catch (err) {
+            res = false;
+        } finally {
+            if (db) {
+                db.close();    
+            }
+        }
+            */
+        return res;
+        
+        
+    }
+
+
 
 }
